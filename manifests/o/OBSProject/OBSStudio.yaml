@@ -1,0 +1,25 @@
+schema_version: 1
+id: OBSProject.OBSStudio
+name: OBS Studio
+publisher: OBS Project
+description: Software for video recording and live streaming.
+status: verified
+version: "33.0.1"
+channel: stable
+license: GPL-2.0-or-later
+homepage: https://obsproject.com/
+repository: https://github.com/obsproject/obs-studio
+category: multimedia
+tags:
+  - recording
+  - streaming
+  - video
+verification:
+  release: https://github.com/obsproject/obs-studio/releases/tag/33.0.1
+  license: https://raw.githubusercontent.com/obsproject/obs-studio/33.0.1/frontend/OBSApp.cpp
+platforms:
+  windows:
+    - architecture: x64
+      provider: winget
+      package_id: OBSProject.OBSStudio
+      provider_source: https://raw.githubusercontent.com/microsoft/winget-pkgs/master/manifests/o/OBSProject/OBSStudio/32.2.0/OBSProject.OBSStudio.installer.yaml

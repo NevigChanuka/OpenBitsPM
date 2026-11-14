@@ -1,0 +1,25 @@
+schema_version: 1
+id: VideoLAN.VLC
+name: VLC Media Player
+publisher: VideoLAN
+description: Multimedia player for local media, discs, and network streams.
+status: verified
+version: "3.0.24"
+channel: stable
+license: GPL-2.0-or-later
+homepage: https://www.videolan.org/
+repository: https://code.videolan.org/videolan/vlc
+category: multimedia
+tags:
+  - audio
+  - media-player
+  - video
+verification:
+  release: https://images.videolan.org/vlc/releases/
+  license: https://github.com/videolan/vlc
+platforms:
+  windows:
+    - architecture: x64
+      provider: winget
+      package_id: VideoLAN.VLC
+      provider_source: https://raw.githubusercontent.com/microsoft/winget-pkgs/master/manifests/v/VideoLAN/VLC/3.0.23/VideoLAN.VLC.installer.yaml

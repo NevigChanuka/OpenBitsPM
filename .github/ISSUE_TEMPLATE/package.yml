@@ -1,0 +1,16 @@
+name: Package request or correction
+description: Propose an open-source application or correct an existing manifest.
+body:
+  - type: input
+    id: application
+    attributes:
+      label: Application name or OpenBits package ID
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Change and supporting sources
+      description: Link the upstream release, source license, and provider package record where relevant.
+    validations:
+      required: true

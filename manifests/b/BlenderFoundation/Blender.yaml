@@ -1,0 +1,25 @@
+schema_version: 1
+id: BlenderFoundation.Blender
+name: Blender
+publisher: Blender Foundation
+description: 3D creation suite for modeling, animation, rendering, and compositing.
+status: verified
+version: "5.3.0"
+channel: stable
+license: GPL-3.0-or-later
+homepage: https://www.blender.org/
+repository: https://projects.blender.org/blender/blender
+category: graphics
+tags:
+  - 3d
+  - animation
+  - rendering
+verification:
+  release: https://www.blender.org/releases/5-3/
+  license: https://github.com/blender/blender/blob/main/release/license/license.md
+platforms:
+  windows:
+    - architecture: x64
+      provider: winget
+      package_id: BlenderFoundation.Blender
+      provider_source: https://raw.githubusercontent.com/microsoft/winget-pkgs/master/manifests/b/BlenderFoundation/Blender/5.2.1/BlenderFoundation.Blender.installer.yaml

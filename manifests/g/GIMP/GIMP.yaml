@@ -1,0 +1,25 @@
+schema_version: 1
+id: GIMP.GIMP
+name: GIMP
+publisher: The GIMP Development Team
+description: Image editor for photo retouching, compositing, and illustration.
+status: verified
+version: "3.2.8"
+channel: stable
+license: GPL-3.0-or-later
+homepage: https://www.gimp.org/
+repository: https://gitlab.gnome.org/GNOME/gimp
+category: graphics
+tags:
+  - image-editing
+  - photo
+  - design
+verification:
+  release: https://www.gimp.org/news/2026/11/02/gimp-3-2-8-released/
+  license: https://raw.githubusercontent.com/GNOME/gimp/GIMP_3_2_8/app/main.c
+platforms:
+  windows:
+    - architecture: x64
+      provider: winget
+      package_id: GIMP.GIMP.3
+      provider_source: https://raw.githubusercontent.com/microsoft/winget-pkgs/master/manifests/g/GIMP/GIMP/3/3.2.6.0/GIMP.GIMP.3.installer.yaml

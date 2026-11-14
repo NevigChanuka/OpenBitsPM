@@ -1,0 +1,338 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "OpenBits package manifest v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "id",
+    "name",
+    "publisher",
+    "description",
+    "status",
+    "channel",
+    "license",
+    "homepage",
+    "repository",
+    "category",
+    "tags",
+    "platforms"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 129,
+      "pattern": "^[A-Za-z][A-Za-z0-9-]{0,63}\\.[A-Za-z][A-Za-z0-9-]{0,63}$"
+    },
+    "name": {
+      "$ref": "#/$defs/text"
+    },
+    "publisher": {
+      "$ref": "#/$defs/text"
+    },
+    "description": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 500,
+      "pattern": "\\S"
+    },
+    "status": {
+      "enum": [
+        "verified",
+        "requires-verification"
+      ]
+    },
+    "version": {
+      "$ref": "#/$defs/stableVersion"
+    },
+    "channel": {
+      "const": "stable"
+    },
+    "license": {
+      "$ref": "#/$defs/text"
+    },
+    "homepage": {
+      "$ref": "#/$defs/httpsUrl"
+    },
+    "repository": {
+      "$ref": "#/$defs/httpsUrl"
+    },
+    "category": {
+      "$ref": "#/$defs/slug"
+    },
+    "tags": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 32,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/slug"
+      }
+    },
+    "platforms": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [],
+      "properties": {
+        "windows": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 32,
+          "uniqueItems": true,
+          "items": {
+            "allOf": [
+              {
+                "$ref": "#/$defs/method"
+              },
+              {
+                "properties": {
+                  "provider": {
+                    "enum": [
+                      "winget",
+                      "scoop",
+                      "chocolatey",
+                      "github-releases"
+                    ]
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "linux": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 32,
+          "uniqueItems": true,
+          "items": {
+            "allOf": [
+              {
+                "$ref": "#/$defs/method"
+              },
+              {
+                "properties": {
+                  "provider": {
+                    "enum": [
+                      "flatpak",
+                      "homebrew",
+                      "github-releases"
+                    ]
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "macos": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 32,
+          "uniqueItems": true,
+          "items": {
+            "allOf": [
+              {
+                "$ref": "#/$defs/method"
+              },
+              {
+                "properties": {
+                  "provider": {
+                    "enum": [
+                      "homebrew",
+                      "github-releases"
+                    ]
+                  }
+                }
+              }
+            ]
+          }
+        }
+      },
+      "minProperties": 1
+    },
+    "verification": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "release",
+        "license"
+      ],
+      "properties": {
+        "release": {
+          "$ref": "#/$defs/httpsUrl"
+        },
+        "license": {
+          "$ref": "#/$defs/httpsUrl"
+        }
+      }
+    },
+    "review_reason": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 500,
+      "pattern": "\\S"
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "verified"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "version",
+          "verification"
+        ],
+        "not": {
+          "required": [
+            "review_reason"
+          ]
+        }
+      },
+      "else": {
+        "required": [
+          "review_reason"
+        ],
+        "not": {
+          "anyOf": [
+            {
+              "required": [
+                "version"
+              ]
+            },
+            {
+              "required": [
+                "verification"
+              ]
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "text": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200,
+      "pattern": "\\S"
+    },
+    "slug": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 48,
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+    },
+    "httpsUrl": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 2048,
+      "pattern": "^https://",
+      "format": "uri"
+    },
+    "stableVersion": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 64,
+      "pattern": "^[0-9]+(\\.[0-9]+){0,5}$"
+    },
+    "method": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "architecture",
+        "provider",
+        "package_id",
+        "provider_source"
+      ],
+      "properties": {
+        "architecture": {
+          "enum": [
+            "x86",
+            "x64",
+            "arm64",
+            "armv7",
+            "riscv64",
+            "universal"
+          ]
+        },
+        "provider": {
+          "enum": [
+            "winget",
+            "scoop",
+            "chocolatey",
+            "flatpak",
+            "homebrew",
+            "github-releases"
+          ]
+        },
+        "package_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._+@/-]*$"
+        },
+        "provider_version": {
+          "$ref": "#/$defs/stableVersion"
+        },
+        "provider_source": {
+          "$ref": "#/$defs/httpsUrl"
+        },
+        "installer": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "url",
+            "sha256"
+          ],
+          "properties": {
+            "url": {
+              "$ref": "#/$defs/httpsUrl"
+            },
+            "sha256": {
+              "type": "string",
+              "minLength": 64,
+              "maxLength": 64,
+              "pattern": "^[a-fA-F0-9]{64}$"
+            }
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "provider": {
+                "const": "github-releases"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "installer"
+            ],
+            "properties": {
+              "package_id": {
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9-]*/[A-Za-z0-9][A-Za-z0-9._-]*$"
+              }
+            }
+          },
+          "else": {
+            "not": {
+              "required": [
+                "installer"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  }
+}
