@@ -21,7 +21,9 @@ The [v1 JSON Schema](schemas/package.schema.json) defines the YAML fields. Each 
 
 - `version` is a quoted upstream stable version. V1 accepts one to six dot-separated numeric components. Confirm release status with upstream metadata even when the version looks stable. A new versioning convention needs an explicit schema and policy change.
 - `status: verified` requires release and license evidence. When the latest release cannot be confirmed, use `status: requires-verification` with `review_reason` and omit `version` and `verification`. A catalog consumer receives only the validator's verified records.
-- Platform bindings identify install methods by OS, CPU architecture, provider, and package ID. V1 models WinGet, Scoop, Chocolatey, Flatpak, Homebrew, and GitHub Releases. The initial records use WinGet on Windows x64.
+- Platform bindings identify install methods by OS, CPU architecture, provider, and package ID. V1 models Scoop, Chocolatey, Flatpak, Homebrew, and GitHub Releases. The initial records use Scoop Extras on Windows x64, with bucket-qualified IDs such as `extras/vlc`.
+- Optional `icon_url` values link directly to HTTPS images for display in OpenBits. The initial icons are 128×128 PNGs from Flathub.
+- Optional `download_urls` map `windows`, `macos`, and `linux` to upstream HTTPS download pages users can open in a browser. Include only systems the upstream project supports. Use `platforms` for provider integrations and managed installers.
 - `provider_source` links to evidence for a provider binding. An optional `provider_version` records an independently verified provider version. The desktop application should query the provider for current availability and installed versions.
 - GitHub Releases bindings model OpenBits-managed downloads and require an installer URL and SHA-256. Delegated bindings identify a package by its provider ID.
 - SPDX expressions must use OSI-approved license IDs in every branch. V1 reserves SPDX exceptions and custom license references for future policy.

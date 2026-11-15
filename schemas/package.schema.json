@@ -55,6 +55,9 @@
     "license": {
       "$ref": "#/$defs/text"
     },
+    "icon_url": {
+      "$ref": "#/$defs/httpsUrl"
+    },
     "homepage": {
       "$ref": "#/$defs/httpsUrl"
     },
@@ -71,6 +74,17 @@
       "uniqueItems": true,
       "items": {
         "$ref": "#/$defs/slug"
+      }
+    },
+    "download_urls": {
+      "description": "Upstream download pages for opening in a browser.",
+      "type": "object",
+      "additionalProperties": false,
+      "minProperties": 1,
+      "properties": {
+        "windows": { "$ref": "#/$defs/httpsUrl" },
+        "macos": { "$ref": "#/$defs/httpsUrl" },
+        "linux": { "$ref": "#/$defs/httpsUrl" }
       }
     },
     "platforms": {
@@ -92,7 +106,6 @@
                 "properties": {
                   "provider": {
                     "enum": [
-                      "winget",
                       "scoop",
                       "chocolatey",
                       "github-releases"
@@ -265,7 +278,6 @@
         },
         "provider": {
           "enum": [
-            "winget",
             "scoop",
             "chocolatey",
             "flatpak",

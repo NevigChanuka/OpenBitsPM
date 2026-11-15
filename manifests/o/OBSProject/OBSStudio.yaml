@@ -8,6 +8,7 @@ version: "33.0.1"
 channel: stable
 license: GPL-2.0-or-later
 homepage: https://obsproject.com/
+icon_url: https://dl.flathub.org/media/com/obsproject/Studio/eee0a1f453649164008dc9f0913dfe7e/icons/128x128/com.obsproject.Studio.png
 repository: https://github.com/obsproject/obs-studio
 category: multimedia
 tags:
@@ -17,9 +18,13 @@ tags:
 verification:
   release: https://github.com/obsproject/obs-studio/releases/tag/33.0.1
   license: https://raw.githubusercontent.com/obsproject/obs-studio/33.0.1/frontend/OBSApp.cpp
+download_urls:
+  windows: https://obsproject.com/download
+  macos: https://obsproject.com/download
+  linux: https://obsproject.com/download
 platforms:
   windows:
     - architecture: x64
-      provider: winget
-      package_id: OBSProject.OBSStudio
-      provider_source: https://raw.githubusercontent.com/microsoft/winget-pkgs/master/manifests/o/OBSProject/OBSStudio/32.2.0/OBSProject.OBSStudio.installer.yaml
+      provider: scoop
+      package_id: extras/obs-studio
+      provider_source: https://raw.githubusercontent.com/ScoopInstaller/Extras/master/bucket/obs-studio.json

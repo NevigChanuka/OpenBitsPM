@@ -8,6 +8,7 @@ version: "5.3.0"
 channel: stable
 license: GPL-3.0-or-later
 homepage: https://www.blender.org/
+icon_url: https://dl.flathub.org/media/org/blender/Blender/01beb69fc29f78483cfd73d724fc8fc8/icons/128x128/org.blender.Blender.png
 repository: https://projects.blender.org/blender/blender
 category: graphics
 tags:
@@ -17,9 +18,13 @@ tags:
 verification:
   release: https://www.blender.org/releases/5-3/
   license: https://github.com/blender/blender/blob/main/release/license/license.md
+download_urls:
+  windows: https://www.blender.org/download//
+  macos: https://www.blender.org/download//
+  linux: https://www.blender.org/download//
 platforms:
   windows:
     - architecture: x64
-      provider: winget
-      package_id: BlenderFoundation.Blender
-      provider_source: https://raw.githubusercontent.com/microsoft/winget-pkgs/master/manifests/b/BlenderFoundation/Blender/5.2.1/BlenderFoundation.Blender.installer.yaml
+      provider: scoop
+      package_id: extras/blender
+      provider_source: https://raw.githubusercontent.com/ScoopInstaller/Extras/master/bucket/blender.json

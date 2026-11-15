@@ -99,14 +99,44 @@ fn rejects_invalid_schema_values_and_urls() {
         .lines()
         .find(|line| line.starts_with("version:"))
         .unwrap();
+    let icon = SEED
+        .lines()
+        .find(|line| line.starts_with("icon_url:"))
+        .unwrap();
     for (from, to, message) in [
         ("channel: stable", "channel: beta", "/channel"),
         (version, "version: \"3.0.24-rc1\"", "/version"),
-        ("windows:", "android:", "/platforms"),
+        (
+            "platforms:\n  windows:",
+            "platforms:\n  android:",
+            "/platforms",
+        ),
+        (
+            "download_urls:\n  windows:",
+            "download_urls:\n  android:",
+            "/download_urls",
+        ),
+        (
+            "download_urls:\n  windows: https://",
+            "download_urls:\n  windows: http://",
+            "/download_urls/windows",
+        ),
+        (
+            "download_urls:\n  windows: https://",
+            "download_urls:\n  windows: https://user@",
+            "download_urls.windows",
+        ),
         ("architecture: x64", "architecture: mips", "/architecture"),
-        ("provider: winget", "provider: flatpak", "/provider"),
-        ("provider: winget", "provider: custom", "/provider"),
-        ("package_id: VideoLAN.VLC", "package_id: ''", "/package_id"),
+        ("provider: scoop", "provider: flatpak", "/provider"),
+        ("provider: scoop", "provider: custom", "/provider"),
+        ("provider: scoop", "provider: winget", "/provider"),
+        ("package_id: extras/vlc", "package_id: ''", "/package_id"),
+        (icon, "icon_url: http://example.org/icon.png", "/icon_url"),
+        (
+            icon,
+            "icon_url: https://user@example.org/icon.png",
+            "icon_url",
+        ),
         (
             "license: GPL-2.0-or-later",
             "license: MadeUp",
@@ -133,8 +163,8 @@ fn rejects_invalid_schema_values_and_urls() {
 fn direct_installers_require_a_sha256() {
     let tree = Tree::new();
     let direct = SEED
-        .replace("provider: winget", "provider: github-releases")
-        .replace("package_id: VideoLAN.VLC", "package_id: fictional/app");
+        .replace("provider: scoop", "provider: github-releases")
+        .replace("package_id: extras/vlc", "package_id: fictional/app");
     tree.write(SEED_PATH, &direct);
     tree.rejects("installer");
     let direct = format!(
@@ -165,8 +195,8 @@ fn rejects_duplicate_repositories_and_provider_ids() {
     tree.write(SEED_PATH, SEED);
     let duplicate = SEED.replace("\nid: VideoLAN.VLC", "\nid: Example.App");
     tree.write("e/Example/App.yaml", &duplicate);
-    tree.rejects("share provider package winget videolan.vlc");
-    let duplicate = duplicate.replace("package_id: VideoLAN.VLC", "package_id: Example.App");
+    tree.rejects("share provider package scoop extras/vlc");
+    let duplicate = duplicate.replace("package_id: extras/vlc", "package_id: Example.App");
     tree.write("e/Example/App.yaml", &duplicate);
     tree.rejects("share repository");
 }

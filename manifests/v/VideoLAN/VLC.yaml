@@ -8,6 +8,7 @@ version: "3.0.24"
 channel: stable
 license: GPL-2.0-or-later
 homepage: https://www.videolan.org/
+icon_url: https://dl.flathub.org/media/org/videolan/VLC/0e71024f872bdd57a2907a775cca0e6c/icons/128x128/org.videolan.VLC.png
 repository: https://code.videolan.org/videolan/vlc
 category: multimedia
 tags:
@@ -17,9 +18,13 @@ tags:
 verification:
   release: https://images.videolan.org/vlc/releases/
   license: https://github.com/videolan/vlc
+download_urls:
+  windows: https://images.videolan.org/vlc/download-windows.html
+  macos: https://images.videolan.org/vlc/download-macosx.html
+  linux: https://images.videolan.org/vlc/
 platforms:
   windows:
     - architecture: x64
-      provider: winget
-      package_id: VideoLAN.VLC
-      provider_source: https://raw.githubusercontent.com/microsoft/winget-pkgs/master/manifests/v/VideoLAN/VLC/3.0.23/VideoLAN.VLC.installer.yaml
+      provider: scoop
+      package_id: extras/vlc
+      provider_source: https://raw.githubusercontent.com/ScoopInstaller/Extras/master/bucket/vlc.json

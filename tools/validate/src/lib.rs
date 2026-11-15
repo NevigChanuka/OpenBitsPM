@@ -138,6 +138,14 @@ fn validate_manifest(
     );
 
     https_url(&manifest["homepage"]).context("homepage")?;
+    if let Some(icon_url) = manifest.get("icon_url") {
+        https_url(icon_url).context("icon_url")?;
+    }
+    if let Some(download_urls) = manifest["download_urls"].as_object() {
+        for (system, url) in download_urls {
+            https_url(url).with_context(|| format!("download_urls.{system}"))?;
+        }
+    }
     let repository = https_url(&manifest["repository"]).context("repository")?;
     ensure!(
         repository.query().is_none() && repository.fragment().is_none(),
@@ -170,7 +178,7 @@ fn validate_manifest(
                 package_id
                     .split('/')
                     .all(|part| !matches!(part, "" | "." | ".."))
-                    && (matches!(provider, "homebrew" | "github-releases")
+                    && (matches!(provider, "scoop" | "homebrew" | "github-releases")
                         || !package_id.contains('/')),
                 "{platform}.{provider}: invalid provider package ID {package_id}"
             );

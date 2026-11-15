@@ -8,6 +8,7 @@ version: "3.2.8"
 channel: stable
 license: GPL-3.0-or-later
 homepage: https://www.gimp.org/
+icon_url: https://dl.flathub.org/media/org/gimp/GIMP/800933a572869e1c8daee367dc2287cb/icons/128x128/org.gimp.GIMP.png
 repository: https://gitlab.gnome.org/GNOME/gimp
 category: graphics
 tags:
@@ -17,9 +18,13 @@ tags:
 verification:
   release: https://www.gimp.org/news/2026/11/02/gimp-3-2-8-released/
   license: https://raw.githubusercontent.com/GNOME/gimp/GIMP_3_2_8/app/main.c
+download_urls:
+  windows: https://www.gimp.org/downloads/
+  macos: https://www.gimp.org/downloads/
+  linux: https://www.gimp.org/downloads/
 platforms:
   windows:
     - architecture: x64
-      provider: winget
-      package_id: GIMP.GIMP.3
-      provider_source: https://raw.githubusercontent.com/microsoft/winget-pkgs/master/manifests/g/GIMP/GIMP/3/3.2.6.0/GIMP.GIMP.3.installer.yaml
+      provider: scoop
+      package_id: extras/gimp
+      provider_source: https://raw.githubusercontent.com/ScoopInstaller/Extras/master/bucket/gimp.json
